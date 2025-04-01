@@ -1,6 +1,6 @@
-from requests import Response
 from pydantic import UUID4, BaseModel
 from datetime import datetime
+from .Student import StudentModel
 
 
 class SchoolModel(BaseModel):
@@ -20,7 +20,7 @@ class Schools:
         self.api_call = api_call
 
     def get_schools(self) -> list[SchoolModel]:
-        """Returns a list of schools"""
+        """Returns a list of all schools"""
         r = self.api_call("schools")
         schools = []
         for school in r["orgs"]:
@@ -32,7 +32,10 @@ class Schools:
         r = self.api_call(f"schools/{pid}")
         return SchoolModel(**r["org"])
 
-    def get_school_students(self, pid: UUID4) -> Response:
-        """Returns a list of Students by School SourcedID"""
+    def get_school_students(self, pid: UUID4) -> list[StudentModel]:
+        """Returns a list of Students by School"""
         r = self.api_call(f"schools/{pid}/students")
-        return r
+        students = []
+        for student in r["users"]:
+            students.append(StudentModel(**student))
+        return students

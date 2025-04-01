@@ -17,4 +17,5 @@ print(test.teachers.get_teachers())
 print(test.teachers.get_teacher("12345678-1234-1234-1234-1234567890ab"))
 print(test.schools.get_schools())
 print(test.schools.get_school("12345678-1234-1234-1234-1234567890ab"))
+print(test.schools.get_school_students("12345678-1234-1234-1234-123456789ab"))
 ```
