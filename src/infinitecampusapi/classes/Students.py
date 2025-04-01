@@ -1,4 +1,6 @@
 from .Student import StudentModel
+from pydantic import UUID4
+from requests import Response
 
 
 class Students:
@@ -25,21 +27,6 @@ class Students:
             students.append(StudentModel(**student))
         return students
 
-    def get_schools(self):
-        """Returns a list of schools"""
-        r = self.api_call("schools")
-        return r
-
-    def get_school(self, pid):
-        """Returns information about a school using it's SourcedID"""
-        r = self.api_call(f"schools/{pid}")
-        return r
-
-    def get_school_students(self, pid):
-        """Returns a list of Students by School SourcedID"""
-        r = self.api_call(f"schools/{pid}/students")
-        return r
-
-    def get_class(self, sourcedId):
+    def get_class(self, sourcedId: UUID4) -> Response:
         r = self.api_call(f"classes/{sourcedId}")
         return r

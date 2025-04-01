@@ -15,7 +15,7 @@ class Auth:
         self.base_url = base_url
         self.access_token = self.__get_token()
 
-    def __get_token(self):
+    def __get_token(self) -> str:
         url = self.token_url
         data = {
             "grant_type": "client_credentials",

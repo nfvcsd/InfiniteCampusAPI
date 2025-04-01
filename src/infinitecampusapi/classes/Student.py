@@ -1,4 +1,4 @@
-from pydantic import BaseModel, UUID4, PositiveInt
+from pydantic import BaseModel, UUID4, PositiveInt, EmailStr
 from datetime import datetime
 
 
@@ -6,11 +6,24 @@ class StudentModel(BaseModel):
     sourcedId: UUID4
     status: str
     dateLastModified: datetime
+    metadata: dict
+    userMasterIdentifier: PositiveInt
+    identifier: PositiveInt
     username: PositiveInt
     enabledUser: bool
+    phone: str = ""
+    sms: str = ""
     givenName: str
     familyName: str
-    metadata: dict
+    middleName: str = ""
+    preferredFirstName: str = ""
+    preferredLastName: str = ""
+    preferrredMiddleName: str = ""
+    email: EmailStr | None = None
+    userIds: list = []
+    roles: list = []
+    agents: list = []
+    grades: list = []
 
 
 class Student:
