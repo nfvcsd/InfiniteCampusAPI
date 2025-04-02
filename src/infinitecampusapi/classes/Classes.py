@@ -1,6 +1,6 @@
 from pydantic import BaseModel, UUID4
 from datetime import datetime
-from classes.extras import guidRef
+from .extras import guidRef
 
 
 class CategoriesModel(BaseModel):
@@ -63,14 +63,14 @@ class ScoreScales(BaseModel):
 
 
 class ClassesModel(BaseModel):
-    sourcedId: UUID4
+    sourcedId: UUID4 | str = ""
     status: str
     dateLastModified: datetime
     metadata: dict = {}
     title: str
     classType: str
     classCode: str
-    location: str
+    location: str = ""
     subjects: list = []
     course: guidRef = {}
     school: guidRef = {}
