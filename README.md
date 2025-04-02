@@ -32,4 +32,30 @@ print(test.gradingPeriods.get_grading_periods())
 print(test.gradingPeriods.get_grading_period("12345678-1234-1234-1234-1234567890ab"))
 print(test.orgs.get_orgs())
 print(test.orgs.get_org("12345678-1234-1234-1234-1234567890ab"))
+print(test.schools.get_school_classes("12345678-1234-1234-1234-1234567890ab"))
+print(test.schools.get_school_class_groups("12345678-1234-1234-1234-1234567890ab"))
+print(test.schools.get_school_courses("12345678-1234-1234-1234-1234567890ab"))
+print(test.schools.get_school_enrollments("12345678-1234-1234-1234-1234567890ab"))
+print(test.schools.get_school_teachers("12345678-1234-1234-1234-1234567890ab"))
+print(test.schools.get_school_terms("12345678-1234-1234-1234-1234567890ab"))
+print(
+    test.schools.get_school_class_enrollments(
+        "12345678-1234-1234-1234-1234567890ab", "12345"
+    )
+)
+print(
+    test.schools.get_school_class_students(
+        "12345678-1234-1234-1234-1234567890ab", "12345"
+    )
+)
+print(
+    test.schools.get_school_class_teachers(
+        "12345678-1234-1234-1234-1234567890ab", "12345"
+    )
+)
+print(test.terms.get_terms())
+print(test.terms.get_term("123"))
+print(test.terms.get_term_classes("123"))
+print(test.terms.get_term_grading_periods("123"))
+
 ```
