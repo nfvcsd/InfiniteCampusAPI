@@ -3,6 +3,14 @@ from .classes.Students import Students
 from .classes.Student import Student
 from .classes.Teachers import Teachers
 from .classes.Schools import Schools
+from .classes.Demographics import Demographics
+from .classes.AcademicSessions import AcademicSessions
+from .classes.Courses import Courses
+from .classes.Enrollments import Enrollments
+from .classes.GradingPeriods import GradingPeriods
+from .classes.Orgs import Orgs
+from .classes.Terms import Terms
+from .classes.Users import Users
 import requests
 
 
@@ -26,6 +34,14 @@ class InfiniteCampus:
         self.student = Student(api_call=self.api_call)
         self.teachers = Teachers(api_call=self.api_call)
         self.schools = Schools(api_call=self.api_call)
+        self.demographics = Demographics(api_call=self.api_call)
+        self.academicSessions = AcademicSessions(api_call=self.api_call)
+        self.courses = Courses(api_call=self.api_call)
+        self.enrollments = Enrollments(api_call=self.api_call)
+        self.gradingPeriods = GradingPeriods(api_call=self.api_call)
+        self.orgs = Orgs(api_call=self.api_call)
+        self.terms = Terms(api_call=self.api_call)
+        self.users = Users(api_call=self.api_call)
 
     def api_call(self, endpoint):
         token = self.access_token
