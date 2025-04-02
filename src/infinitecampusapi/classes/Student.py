@@ -1,5 +1,7 @@
 from pydantic import BaseModel, UUID4, PositiveInt, EmailStr
 from datetime import datetime
+from .Demographics import Demographics, DemographicsModel
+from .extras import guidRef, V1P2UserRoleBase, UserId
 
 
 class StudentModel(BaseModel):
@@ -20,10 +22,10 @@ class StudentModel(BaseModel):
     preferredLastName: str = ""
     preferrredMiddleName: str = ""
     email: EmailStr | None = None
-    userIds: list = []
-    roles: list = []
-    agents: list = []
-    grades: list = []
+    userIds: list[UserId] = []
+    roles: list[V1P2UserRoleBase] = []
+    agents: list[guidRef] = []
+    grades: list[str] = []
 
 
 class Student:
@@ -38,3 +40,11 @@ class Student:
     def get_student_classes(self, pid: UUID4):
         r = self.api_call(f"students/{pid}/classes")
         return r
+
+    def get_student_demographics(self, student: StudentModel) -> DemographicsModel:
+        """Convenience function to get the demographics for a student.
+        Takes a StudentModel object as the input and returns a DemographicsModel Object
+        """
+        student_demographic = Demographics(api_call=self.api_call)
+        demographics = student_demographic.get_demographic(student.sourcedId)
+        return demographics
