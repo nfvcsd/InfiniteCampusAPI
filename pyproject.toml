@@ -1,6 +1,6 @@
 [project]
 name = "infinitecampusapi"
-version = "0.0.5"
+version = "0.1.0"
 description = "A Python Wrapper for use with the Infinite Campus API"
 authors = [
     {name = "Alex Snyder",email = "28544457+TheFuzzyTech@users.noreply.github.com"}
