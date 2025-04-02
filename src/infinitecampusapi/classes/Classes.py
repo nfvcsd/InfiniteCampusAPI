@@ -80,7 +80,7 @@ class ClassesModel(BaseModel):
 
 
 class ClassGroup(BaseModel):
-    sourcedId: UUID4
+    sourcedId: UUID4 | str
     status: str
     dateLastModified: datetime
     metadata: dict = {}
