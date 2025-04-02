@@ -7,6 +7,7 @@ from .classes.Demographics import Demographics
 from .classes.AcademicSessions import AcademicSessions
 from .classes.Courses import Courses
 from .classes.Enrollments import Enrollments
+from .classes.GradingPeriods import GradingPeriods
 import requests
 
 
@@ -34,6 +35,7 @@ class InfiniteCampus:
         self.academicSessions = AcademicSessions(api_call=self.api_call)
         self.courses = Courses(api_call=self.api_call)
         self.enrollments = Enrollments(api_call=self.api_call)
+        self.gradingPeriods = GradingPeriods(api_call=self.api_call)
 
     def api_call(self, endpoint):
         token = self.access_token

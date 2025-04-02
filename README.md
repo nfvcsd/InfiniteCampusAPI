@@ -28,4 +28,6 @@ print(test.courses.get_course("12345"))
 print(test.courses.get_course_classes("12345"))
 print(test.enrollments.get_enrollments())
 print(test.enrollments.get_enrollment("s12345678"))
+print(test.gradingPeriods.get_grading_periods())
+print(test.gradingPeriods.get_grading_period("12345678-1234-1234-1234-1234567890ab"))
 ```

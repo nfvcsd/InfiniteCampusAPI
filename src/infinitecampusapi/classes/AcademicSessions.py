@@ -1,4 +1,5 @@
 from pydantic import BaseModel, UUID4
+from .extras import guidRef
 from datetime import datetime
 
 
@@ -11,8 +12,8 @@ class AcademicSessionsModel(BaseModel):
     schoolYear: str
     startDate: datetime = ""
     endDate: datetime = ""
-    children: list = []
-    parent: dict = {}
+    children: list[guidRef] = []
+    parent: guidRef = {}
     type: str
 
 
