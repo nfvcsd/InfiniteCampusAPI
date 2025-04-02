@@ -57,5 +57,8 @@ print(test.terms.get_terms())
 print(test.terms.get_term("123"))
 print(test.terms.get_term_classes("123"))
 print(test.terms.get_term_grading_periods("123"))
+print(test.users.get_users())
+print(test.users.get_user("12345678-1234-1234-1234-1234567890ab"))
+print(test.users.get_user_classes("12345678-1234-1234-1234-1234567890ab"))
 
 ```
