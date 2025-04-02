@@ -4,6 +4,7 @@ from .classes.Student import Student
 from .classes.Teachers import Teachers
 from .classes.Schools import Schools
 from .classes.Demographics import Demographics
+from .classes.AcademicSessions import AcademicSessions
 import requests
 
 
@@ -28,6 +29,7 @@ class InfiniteCampus:
         self.teachers = Teachers(api_call=self.api_call)
         self.schools = Schools(api_call=self.api_call)
         self.demographics = Demographics(api_call=self.api_call)
+        self.academicSessions = AcademicSessions(api_call=self.api_call)
 
     def api_call(self, endpoint):
         token = self.access_token

@@ -21,4 +21,6 @@ print(test.schools.get_school_students("12345678-1234-1234-1234-123456789ab"))
 print(test.demographics.get_demographics())
 print(test.demographics.get_demographic("12345678-1234-1234-1234-1234567890ab"))
 print(test.student.get_student_demographics(test.students.get_students()[0]))
+print(test.academicSessions.get_academic_sessions())
+print(test.academicSessions.get_academic_session("12345678-1234-1234-1234-1234567890ab"))
 ```
