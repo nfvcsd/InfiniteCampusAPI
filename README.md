@@ -61,4 +61,7 @@ print(test.users.get_users())
 print(test.users.get_user("12345678-1234-1234-1234-1234567890ab"))
 print(test.users.get_user_classes("12345678-1234-1234-1234-1234567890ab"))
 
+# Filtering available on get_students
+print(test.students.get_students(filters="familyName='Doe' AND givenName='John'"))
+
 ```

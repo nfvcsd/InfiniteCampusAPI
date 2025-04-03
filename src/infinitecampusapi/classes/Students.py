@@ -19,9 +19,9 @@ class Students:
             data.append({"name": name, "ID": f"{sourcedid:04}"})
         return data
 
-    def get_students(self) -> list[StudentModel]:
+    def get_students(self, filters: str = "") -> list[StudentModel]:
         """Returns a list of students using the StudentModel"""
-        r = self.api_call("students")
+        r = self.api_call("students", filters=f"filter={filters}")
         students = []
         for student in r["users"]:
             students.append(StudentModel(**student))
