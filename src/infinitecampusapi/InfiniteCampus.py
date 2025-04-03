@@ -46,7 +46,9 @@ class InfiniteCampus:
     def api_call(self, endpoint, filters=""):
         token = self.access_token
         headers = {"Authorization": f"Bearer {token}"}
-        r = requests.get(f"{self.url}{endpoint}?{filters}&limit=5000", headers=headers)
+        r = requests.get(
+            f"{self.url}{endpoint}?filter={filters}&limit=5000", headers=headers
+        )
         if r.status_code != 200:
             print(f"API Call returned {r.status_code} status")
             raise Exception(

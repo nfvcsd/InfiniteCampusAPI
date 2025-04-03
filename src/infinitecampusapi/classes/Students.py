@@ -21,7 +21,7 @@ class Students:
 
     def get_students(self, filters: str = "") -> list[StudentModel]:
         """Returns a list of students using the StudentModel"""
-        r = self.api_call("students", filters=f"filter={filters}")
+        r = self.api_call("students", filters=filters)
         students = []
         for student in r["users"]:
             students.append(StudentModel(**student))
