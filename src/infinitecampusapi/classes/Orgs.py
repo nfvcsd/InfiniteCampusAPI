@@ -25,7 +25,7 @@ class Orgs:
         orgs = []
         for org in r["orgs"]:
             orgs.append(OrgsModel(**org))
-        return org
+        return orgs
 
     def get_org(self, pid: UUID4) -> OrgsModel:
         """Returns a single org of the OrgsModel type"""

@@ -33,7 +33,7 @@ class Courses:
         r = self.api_call(f"courses/{pid}")
         return CourseModel(**r["course"])
 
-    def get_course_classes(self, pid: UUID4 | str) -> ClassesModel:
+    def get_course_classes(self, pid: UUID4 | str) -> list[ClassesModel]:
         """Returns a list of classes for a course using the ClassesModel Type"""
         r = self.api_call(f"courses/{pid}/classes")
         classes = []
