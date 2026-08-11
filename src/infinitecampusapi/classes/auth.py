@@ -22,6 +22,10 @@ class Auth:
             "client_id": self.key,
             "client_secret": self.secret,
         }
+
         response = requests.post(url, data=data)
-        access_token = response.json()["access_token"]
-        return access_token
+        try:
+            access_token = response.json()["access_token"]
+            return access_token
+        except requests.exceptions.JSONDecodeError:
+            raise ConnectionError("Please Check your credentials")

@@ -12,7 +12,7 @@ class GradingPeriods:
         periods = []
         for period in r["academicSessions"]:
             periods.append(AcademicSessionsModel(**period))
-        return period
+        return periods
 
     def get_grading_period(self, pid: UUID4) -> AcademicSessionsModel:
         """Returns a single gradingPeriod of the AcademicSessionsModel type"""

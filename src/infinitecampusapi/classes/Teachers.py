@@ -46,13 +46,13 @@ class Teachers:
         return teacher
 
     def get_teacher_ids(self):
-        """This is deprecated for use with v1p1"""
+        """Updated to return legacy ID"""
         data = []
-        r = self.get_teachers()
-        for user in r["users"]:
-            sourcedid = user["sourcedId"]
-            name = f"{user['givenName']} {user['familyName']}"
-            if sourcedid[0] == "t":
+        teachers = self.get_teachers()
+        for teacher in teachers:
+            sourcedid = teacher.metadata["ic.legacySourcedId"][0]
+            name = f"{teacher.givenName} {teacher.familyName}"
+            if teacher.metadata["ic.legacySourcedId"][0] == "t":
                 sourcedid = f"{sourcedid[1:]}"
             sourcedid = int(sourcedid)
             data.append({"name": name, "ID": f"{sourcedid:04}"})
