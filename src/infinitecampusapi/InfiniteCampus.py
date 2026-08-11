@@ -51,6 +51,7 @@ class InfiniteCampus:
         )
         if r.status_code != 200:
             print(f"API Call returned {r.status_code} status")
+            print(f"{self.url}{endpoint}?filter={filters}&limit=5000")
             raise Exception(
                 f"API endpoint {endpoint} returned a {r.status_code} Status Code."
             )

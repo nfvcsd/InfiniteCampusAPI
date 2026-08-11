@@ -13,7 +13,7 @@ class Terms:
         terms = []
         for term in r["academicSessions"]:
             terms.append(AcademicSessionsModel(**term))
-        return term
+        return terms
 
     def get_term(self, pid: UUID4) -> AcademicSessionsModel:
         """Returns a single Term of the AcademicSessionsModel type"""
