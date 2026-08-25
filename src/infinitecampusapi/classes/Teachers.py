@@ -50,7 +50,7 @@ class Teachers:
         data = []
         teachers = self.get_teachers()
         for teacher in teachers:
-            sourcedid = teacher.metadata["ic.legacySourcedId"][0]
+            sourcedid = teacher.metadata["ic.legacySourcedId"]
             name = f"{teacher.givenName} {teacher.familyName}"
             if teacher.metadata["ic.legacySourcedId"][0] == "t":
                 sourcedid = f"{sourcedid[1:]}"
