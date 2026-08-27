@@ -6,6 +6,7 @@ from infinitecampusapi import (
     APIError,
     AuthenticationError,
     InfiniteCampus,
+    ResponseDecodeError,
     TransportError,
 )
 
@@ -99,6 +100,54 @@ class TransportTests(unittest.TestCase):
             client.api_call("students")
 
         self.assertIsInstance(raised.exception.__cause__, requests.Timeout)
+
+    def test_authentication_request_failure_is_wrapped(self):
+        class FailingSession(FakeSession):
+            def post(self, url, **kwargs):
+                raise requests.ConnectionError("unreachable")
+
+        with self.assertRaises(TransportError) as raised:
+            self.make_client(FailingSession())
+
+        self.assertIsInstance(raised.exception.__cause__, requests.ConnectionError)
+
+    def test_invalid_authentication_json_is_rejected(self):
+        class InvalidJSONResponse(FakeResponse):
+            def json(self):
+                raise ValueError("invalid JSON")
+
+        session = FakeSession(token_responses=[InvalidJSONResponse(None)])
+
+        with self.assertRaises(ResponseDecodeError):
+            self.make_client(session)
+
+    def test_missing_access_token_is_rejected(self):
+        session = FakeSession(token_responses=[FakeResponse({"expires_in": 3600})])
+
+        with self.assertRaises(AuthenticationError):
+            self.make_client(session)
+
+    def test_invalid_expiration_is_rejected(self):
+        session = FakeSession(
+            token_responses=[
+                FakeResponse({"access_token": "token", "expires_in": "never"})
+            ]
+        )
+
+        with self.assertRaises(AuthenticationError):
+            self.make_client(session)
+
+    def test_invalid_api_json_is_rejected(self):
+        class InvalidJSONResponse(FakeResponse):
+            def json(self):
+                raise ValueError("invalid JSON")
+
+        client = self.make_client(
+            FakeSession(api_responses=[InvalidJSONResponse(None)])
+        )
+
+        with self.assertRaises(ResponseDecodeError):
+            client.api_call("students")
 
     def test_expired_token_is_refreshed_before_api_call(self):
         session = FakeSession(
