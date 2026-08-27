@@ -11,6 +11,7 @@ from .classes.GradingPeriods import GradingPeriods
 from .classes.Orgs import Orgs
 from .classes.Terms import Terms
 from .classes.Users import Users
+from .exceptions import APIError, ResponseDecodeError, TransportError
 import requests
 
 
@@ -18,18 +19,20 @@ class InfiniteCampus:
     """Python Object for Interacting with Infinite Campus.
     Requires token_url, key, secret, and base_url"""
 
-    access_token: str
     url: str
 
-    def __init__(self, token_url, key, secret, base_url):
-        credentials = Auth(
+    def __init__(self, token_url, key, secret, base_url, session=None, timeout=30):
+        self.session = session if session is not None else requests.Session()
+        self.timeout = timeout
+        self.auth = Auth(
             token_url,
             key,
             secret,
             base_url,
+            session=self.session,
+            timeout=self.timeout,
         )
-        self.access_token = credentials.access_token
-        self.url = credentials.base_url
+        self.url = self.auth.base_url
         self.students = Students(api_call=self.api_call)
         self.student = Student(api_call=self.api_call)
         self.teachers = Teachers(api_call=self.api_call)
@@ -43,16 +46,45 @@ class InfiniteCampus:
         self.terms = Terms(api_call=self.api_call)
         self.users = Users(api_call=self.api_call)
 
+    @property
+    def access_token(self) -> str:
+        """Return the current token while preserving the original public attribute."""
+        return self.auth.access_token
+
     def api_call(self, endpoint, filters=""):
-        token = self.access_token
-        headers = {"Authorization": f"Bearer {token}"}
-        r = requests.get(
-            f"{self.url}{endpoint}?filter={filters}&limit=5000", headers=headers
-        )
-        if r.status_code != 200:
-            print(f"API Call returned {r.status_code} status")
-            print(f"{self.url}{endpoint}?filter={filters}&limit=5000")
-            raise Exception(
-                f"API endpoint {endpoint} returned a {r.status_code} Status Code."
+        params = {"limit": 5000}
+        if filters:
+            params["filter"] = filters
+        url = f"{self.url.rstrip('/')}/{endpoint.lstrip('/')}"
+
+        for attempt in range(2):
+            headers = {"Authorization": f"Bearer {self.auth.access_token}"}
+            try:
+                response = self.session.get(
+                    url,
+                    headers=headers,
+                    params=params,
+                    timeout=self.timeout,
+                )
+            except requests.RequestException as exc:
+                raise TransportError(
+                    f"Unable to reach API endpoint {endpoint}"
+                ) from exc
+
+            if response.status_code != 401 or attempt == 1:
+                break
+            self.auth.refresh(force=True)
+
+        if not 200 <= response.status_code < 300:
+            raise APIError(
+                f"API endpoint {endpoint} returned status code {response.status_code}",
+                status_code=response.status_code,
+                endpoint=endpoint,
             )
-        return r.json()
+
+        try:
+            return response.json()
+        except (requests.exceptions.JSONDecodeError, ValueError) as exc:
+            raise ResponseDecodeError(
+                f"API endpoint {endpoint} returned invalid JSON"
+            ) from exc
