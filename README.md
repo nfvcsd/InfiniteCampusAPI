@@ -65,3 +65,9 @@ print(test.users.get_user_classes("12345678-1234-1234-1234-1234567890ab"))
 print(test.students.get_students(filters="familyName='Doe' AND givenName='John'"))
 
 ```
+
+Running Tests:
+```
+cd /Users/user/Documents/GitHub/InfiniteCampusAPI
+PYTHONPATH=src poetry run python -m unittest discover -s tests -v
+````
