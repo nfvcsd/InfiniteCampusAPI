@@ -21,7 +21,7 @@ class Terms:
         term = AcademicSessionsModel(**r["academicSession"])
         return term
 
-    def get_term_classes(self, pid: UUID4) -> ClassesModel:
+    def get_term_classes(self, pid: UUID4) -> list[ClassesModel]:
         """Returns a list of classes of the ClassesModel type"""
         r = self.api_call(f"terms/{pid}/classes")
         classes = []
@@ -29,7 +29,7 @@ class Terms:
             classes.append(ClassesModel(**s_class))
         return classes
 
-    def get_term_grading_periods(self, pid: UUID4) -> AcademicSessionsModel:
+    def get_term_grading_periods(self, pid: UUID4) -> list[AcademicSessionsModel]:
         """Returns a list of AcademicSessions of the AcademisSessionsModel type"""
         r = self.api_call(f"terms/{pid}/gradingPeriods")
         sessions = []

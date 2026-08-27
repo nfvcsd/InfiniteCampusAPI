@@ -1,6 +1,6 @@
 from .Student import StudentModel
 from pydantic import UUID4
-from requests import Response
+from .Classes import ClassesModel
 
 
 class Students:
@@ -8,6 +8,7 @@ class Students:
         self.api_call = api_call
 
     def get_student_ids(self):
+        """Returns Student name and SourcedID with minimum of 4 digits"""
         data = []
         r = self.api_call("students")
         for user in r["users"]:
@@ -27,6 +28,7 @@ class Students:
             students.append(StudentModel(**student))
         return students
 
-    def get_class(self, sourcedId: UUID4) -> Response:
+    def get_class(self, sourcedId: UUID4) -> ClassesModel:
+        """I can't test this because it requires a vendor license"""
         r = self.api_call(f"classes/{sourcedId}")
-        return r
+        return ClassesModel(**r)
